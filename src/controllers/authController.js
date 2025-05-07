@@ -3,8 +3,8 @@ const AuthService = require('../services/authService');
 class AuthController {
     async register(req, res, next) {
         try {
-            const { email, password, username, role } = req.body;
-            const result = await AuthService.register({ email, password, username, role });
+            const data = req.body;
+            const result = await AuthService.register(data);
 
             res.cookie('jwt', result.accessToken, {
                 httpOnly: true,
