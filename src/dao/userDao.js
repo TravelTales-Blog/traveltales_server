@@ -3,14 +3,14 @@ const { v4: uuidv4 } = require('uuid');
 
 class UserDao {
     static async create(email, password, username, role) {
-        const id = uuidv4();
+        const user_id = uuidv4();
         return new Promise((resolve, reject) => {
             db.run(
-                `INSERT INTO users (id, email, password, username, role) VALUES (?, ?, ?, ?, ?)`,
-                [id, email, password, username, role],
+                `INSERT INTO users (user_id, email, password, username, role) VALUES (?, ?, ?, ?, ?)`,
+                [user_id, email, password, username, role],
                 function (err) {
                     if (err) reject(err);
-                    else resolve({id, email, username, role});
+                    else resolve({ user_id, email, username, role });
                 }
             );
         });
@@ -32,7 +32,7 @@ class UserDao {
     static async findById(id) {
         return new Promise((resolve, reject) => {
             db.get(
-                'SELECT id, email, username, role, is_active FROM users WHERE id = ?',
+                'SELECT id, email, username, role, is_active FROM users WHERE user_id = ?',
                 [id],
                 (err, row) => {
                     if (err) reject(err);
@@ -45,7 +45,7 @@ class UserDao {
     static async findAllUsers(id) {
         return new Promise((resolve, reject) => {
             db.all(
-                'SELECT id, email, username, role, is_active FROM users WHERE id != ?',
+                'SELECT user_id, email, username, role, is_active FROM users WHERE user_id != ?',
                 [id],
                 (err, rows) => {
                     if (err) reject(err);
@@ -58,7 +58,7 @@ class UserDao {
     static async updateLastUsed(id) {
         return new Promise((resolve, reject) => {
             db.run(
-                'UPDATE users SET last_used = CURRENT_TIMESTAMP WHERE id = ?',
+                'UPDATE users SET last_used = CURRENT_TIMESTAMP WHERE user_id = ?',
                 [id],
                 function (err) {
                     if (err) reject(err);
@@ -71,7 +71,7 @@ class UserDao {
     static async deactivateUser(id) {
         return new Promise((resolve, reject) => {
             db.run(
-                'UPDATE users SET is_active = 0 WHERE id = ?',
+                'UPDATE users SET is_active = 0 WHERE user_id = ?',
                 [id],
                 function (err) {
                     if (err) reject(err);
@@ -84,7 +84,7 @@ class UserDao {
     static async activateUser(id) {
         return new Promise((resolve, reject) => {
             db.run(
-                'UPDATE users SET is_active = 1 WHERE id = ?',
+                'UPDATE users SET is_active = 1 WHERE user_id = ?',
                 [id],
                 function (err) {
                     if (err) reject(err);
