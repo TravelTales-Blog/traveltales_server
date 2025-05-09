@@ -6,6 +6,7 @@ const authRoutes = require('./src/routes/authRoutes');
 const postRoutes = require('./src/routes/postRoutes');
 const followRoutes = require('./src/routes/followRoutes');
 const reactRoutes = require('./src/routes/reactionRoutes');
+const commentRoutes = require('./src/routes/commentRoutes');
 const healthcheckRoute = require('./src/routes/healthcheckRoute');
 const cookieParser = require('cookie-parser');
 
@@ -24,6 +25,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/post', postRoutes);
 app.use('/api/follow', followRoutes);
 app.use('/api/react', reactRoutes);
+app.use('/api/comment', commentRoutes);
 
 app.use(errorHandler);
 

@@ -9,9 +9,7 @@ router.use(csrfProtection);
 router.use(authenticateJWT);
 
 router.post('/react', reactionController.react);
-
 router.delete('/undoReact', reactionController.undo);
-
 router.get('/getCount', reactionController.count);
 
 module.exports = router;

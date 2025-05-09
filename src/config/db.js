@@ -61,6 +61,18 @@ db.serialize(() => {
       FOREIGN KEY (post_id) REFERENCES posts(post_id)
     )
   `);
+
+  db.run(`
+    CREATE TABLE IF NOT EXISTS comments (
+      comment_id TEXT NOT NULL,
+      user_id TEXT NOT NULL,
+      post_id TEXT NOT NULL,
+      comment TEXT NOT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (user_id) REFERENCES users(user_id),
+      FOREIGN KEY (post_id) REFERENCES posts(post_id)
+    )
+  `);
 });
 
 module.exports = db;
