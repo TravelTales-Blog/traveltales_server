@@ -17,7 +17,7 @@ class PostDao {
     static async findAllPosts() {
         return new Promise((resolve, reject) => {
             db.all(
-                'SELECT post_id, title, content, country, visit_date FROM posts',
+                'SELECT post_id, title, content, country, visit_date FROM posts ORDER BY created_at DESC',
                 (err, rows) => {
                     if (err) reject(err);
                     else resolve(rows);
