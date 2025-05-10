@@ -12,5 +12,7 @@ router.post('/follow', followController.follow);
 router.delete('/unfollow', followController.unfollow);
 router.get('/getAllfollowers', followController.getAllFollowers);
 router.get('/getAllFollowees', followController.getAllFollowing);
+router.get('/getCounts', followController.getCounts);
+router.get('/getNotfollowing', followController.getNotFollowing);
 
 module.exports = router;

@@ -44,6 +44,24 @@ class FollowService {
             throw new CustomError(500, "Error in retriving followings");
         }
     }
+
+    async getCounts(userId) {
+        if (!userId) {
+            throw new CustomError(400, 'userId required');
+        }
+        const [followersCount, followingCount] = await Promise.all([
+            FollowDao.countFollowers(userId),
+            FollowDao.countFollowing(userId),
+        ]);
+        return { followersCount, followingCount };
+    }
+
+    async getNotFollowing(userId) {
+        if (!userId) {
+            throw new CustomError(400, 'userId required');
+        }
+        return FollowDao.getNotFollowing(userId);
+    }
 }
 
 module.exports = new FollowService();

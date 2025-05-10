@@ -24,8 +24,8 @@ class FollowController {
   async getAllFollowers(req, res, next) {
     try {
       const { userId } = req.query;
-      const list = await followService.getAllFollowers(userId);
-      res.status(200).json({ followers: list });
+      const followers = await followService.getAllFollowers(userId);
+      res.status(200).json(followers);
     } catch (err) {
       next(err);
     }
@@ -34,8 +34,28 @@ class FollowController {
   async getAllFollowing(req, res, next) {
     try {
       const { userId } = req.query;
-      const list = await followService.getAllFollowing(userId);
-      res.status(200).json({ following: list });
+      const followees = await followService.getAllFollowing(userId);
+      res.status(200).json(followees);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async getCounts(req, res, next) {
+    try {
+      const { userId } = req.query;
+      const result = await followService.getCounts(userId);
+      res.status(200).json(result);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async getNotFollowing(req, res, next) {
+    try {
+      const { userId } = req.query;
+      const notFollowers = await followService.getNotFollowing(userId);
+      res.status(200).json(notFollowers);
     } catch (err) {
       next(err);
     }
