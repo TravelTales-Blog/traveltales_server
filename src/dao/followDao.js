@@ -82,14 +82,7 @@ class FollowDao {
   static async getNotFollowing(user_id) {
     return new Promise((resolve, reject) => {
       db.all(`
-        SELECT u.user_id, u.username, u.email
-        FROM users u
-        WHERE u.user_id != ?
-          AND u.user_id NOT IN (
-            SELECT followee_id
-            FROM follows
-            WHERE follower_id = ?
-          )
+        SELECT u.user_id, u.username, u.email FROM users u WHERE u.user_id != ? AND u.user_id NOT IN (SELECT followee_id FROM follows WHERE follower_id = ?)
       `, [user_id, user_id], (err, rows) => {
         if (err) return reject(err);
         resolve(rows);

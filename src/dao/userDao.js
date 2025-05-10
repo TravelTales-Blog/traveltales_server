@@ -32,7 +32,7 @@ class UserDao {
     static async findById(id) {
         return new Promise((resolve, reject) => {
             db.get(
-                'SELECT id, email, username, role, is_active FROM users WHERE user_id = ?',
+                'SELECT user_id, email, username, role, is_active FROM users WHERE user_id = ?',
                 [id],
                 (err, row) => {
                     if (err) reject(err);
