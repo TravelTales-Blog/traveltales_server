@@ -81,6 +81,19 @@ class CommentDao {
       });
     });
   }
+
+  static async getCount(post_id) {
+    return new Promise((resolve, reject) => {
+      db.get(
+        `SELECT COUNT(*) AS count FROM comments WHERE post_id = ?`,
+        [post_id],
+        (err, row) => {
+          if (err) return reject(err);
+          resolve(row.count);
+        }
+      );
+    });
+  }
 }
 
 module.exports = CommentDao;

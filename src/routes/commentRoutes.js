@@ -13,5 +13,6 @@ router.get('/getCommentById', commentController.getCommentById);
 router.post('/createComment', commentController.createComment);
 router.patch('/updateComment', commentController.updateComment);
 router.delete('/deleteComment', commentController.deleteComment);
+router.get('/getCount', commentController.getCommentCount);
 
 module.exports = router;

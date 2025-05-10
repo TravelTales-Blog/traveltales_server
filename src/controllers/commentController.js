@@ -50,6 +50,16 @@ class CommentController {
       next(err);
     }
   }
+
+  async getCommentCount(req, res, next) {
+    try {
+      const { postId } = req.query;
+      const result = await commentService.getCountByPostId(postId);
+      res.status(200).json(result);
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 
 module.exports = new CommentController();

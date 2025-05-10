@@ -34,6 +34,14 @@ class CommentService {
     if (!postId) throw new CustomError(400, 'postId required');
     return CommentDao.getCommentsByPost(postId);
   }
+
+  async getCountByPostId(postId) {
+    if (!postId) {
+      throw new CustomError(400, 'postId query param required');
+    }
+    const count = await CommentDao.getCount(postId);
+    return { count };
+  }
 }
 
 module.exports = new CommentService();
