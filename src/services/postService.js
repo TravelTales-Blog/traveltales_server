@@ -5,7 +5,7 @@ const CustomError = require('../utils/errorHandler');
 class PostService {
     async createPost(data) {
         try {
-            const post = PostDao.createPost(data.user_id, data.title, data.content, data.country, data.visit_date);
+            const post = PostDao.createPost(data.user_id, data.title, data.content, data.country, data.visit_date, data.image_url);
             return post;
         } catch (error) {
             throw new CustomError(500, "Error in post create")
@@ -42,7 +42,7 @@ class PostService {
     async updatePost(data) {
 
         try {
-            const updatedPost = await PostDao.updatePost(data.post_id, data.title, data.content, data.country, data.visit_date);
+            const updatedPost = await PostDao.updatePost(data.post_id, data.title, data.content, data.country, data.visit_date, data.image_url);
             if (!updatedPost) throw new CustomError(404, 'Post not found or no changes');
             return updatedPost;
         } catch (error) {
@@ -71,6 +71,14 @@ class PostService {
             throw new CustomError(500, 'Error is fetching Users');
         }
     }
+
+    async getPostOfFollowees(userId) {
+        if (!userId) {
+            throw new CustomError(400, 'userId query param required');
+        }
+        return PostDao.findByFollowees(userId);
+    }
+
 }
 
 module.exports = new PostService();
