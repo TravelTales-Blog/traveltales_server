@@ -21,7 +21,7 @@ class PostService {
             if (error instanceof CustomError) {
                 throw error;
             }
-            throw new CustomError(500, 'Error is fetching Users');
+            throw new CustomError(500, 'Error is fetching posts');
         }
     };
 
@@ -68,16 +68,23 @@ class PostService {
             if (error instanceof CustomError) {
                 throw error;
             }
-            throw new CustomError(500, 'Error is fetching Users');
+            throw new CustomError(500, 'Error is fetching Posts');
         }
     }
 
     async getPostOfFollowees(userId) {
         if (!userId) {
-            throw new CustomError(400, 'userId query param required');
+            throw new CustomError(400, 'userId required');
         }
         return PostDao.findByFollowees(userId);
     }
+
+    async getPostsByUser(userId) {
+        if (!userId) {
+          throw new CustomError(400, 'userId required');
+        }
+        return PostDao.findByUser(userId);
+      }
 
 }
 

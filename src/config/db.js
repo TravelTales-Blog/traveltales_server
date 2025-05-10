@@ -34,6 +34,7 @@ db.serialize(() => {
       content TEXT NOT NULL,
       country TEXT NOT NULL,
       visit_date DATE NOT NULL,
+      image_url TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
     );

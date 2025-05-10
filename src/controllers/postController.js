@@ -70,6 +70,16 @@ class PostController {
       next(error);
     }
   }
+
+  async getPostsByUser(req, res, next) {
+    try {
+      const { userId } = req.query
+      const posts = await postService.getPostsByUser(userId);
+      res.status(200).json(posts);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = new PostController();

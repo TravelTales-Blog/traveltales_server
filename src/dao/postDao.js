@@ -2,14 +2,14 @@ const db = require('../config/db');
 const { v4: uuidv4 } = require('uuid');
 
 class PostDao {
-    static async createPost(user_id, title, content, country, visit_date) {
+    static async createPost(user_id, title, content, country, visit_date, image_url) {
         const post_id = uuidv4();
         return new Promise((resolve, reject) => {
-            db.run(`INSERT INTO posts (post_id, user_id, title, content, country, visit_date) VALUES (?, ?, ?, ?, ?, ?)`,
-                [post_id, user_id, title, content, country, visit_date],
+            db.run(`INSERT INTO posts (post_id, user_id, title, content, country, visit_date, image_url) VALUES (?, ?, ?, ?, ?, ?, ?)`,
+                [post_id, user_id, title, content, country, visit_date, image_url],
                 function (err) {
                     if (err) return reject(err);
-                    resolve({ post_id, user_id, title, content, country, visit_date });
+                    resolve({ post_id, user_id, title, content, country, visit_date, image_url });
                 });
         });
     }
@@ -17,16 +17,7 @@ class PostDao {
     static async findAllPosts() {
         return new Promise((resolve, reject) => {
             db.all(
-                `SELECT 
-                posts.post_id, 
-                posts.title, 
-                posts.content, 
-                posts.country, 
-                posts.visit_date, 
-                users.username 
-             FROM posts 
-             JOIN users ON posts.user_id = users.user_id 
-             ORDER BY posts.created_at DESC`,
+                `SELECT p.post_id p.title, p.content, p.country, p.visit_date, p.image_url u.username FROM posts AS p JOIN users AS u N p.user_id = u.user_id ORDER BY p.created_at DESC`,
                 (err, rows) => {
                     if (err) reject(err);
                     else resolve(rows);
@@ -71,7 +62,6 @@ class PostDao {
     }
 
     static async filterPosts({ country, author, limit = 10, offset = 0 }) {
-        // build dynamic WHERE clauses
         const clauses = [];
         const params = [];
 
@@ -130,6 +120,28 @@ class PostDao {
             )
             ORDER BY p.created_at DESC
           `, [follower_id], (err, rows) => {
+                if (err) return reject(err);
+                resolve(rows);
+            });
+        });
+    }
+
+    static async findByUser(user_id) {
+        return new Promise((resolve, reject) => {
+            db.all(`
+            SELECT
+              p.post_id,
+              p.user_id,
+              p.title,
+              p.content,
+              p.country,
+              p.visit_date,
+              p.image_url
+            FROM posts p
+            JOIN users u ON p.user_id = u.user_id
+            WHERE p.user_id = ?
+            ORDER BY p.created_at DESC
+          `, [user_id], (err, rows) => {
                 if (err) return reject(err);
                 resolve(rows);
             });
