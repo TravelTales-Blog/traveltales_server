@@ -23,6 +23,13 @@ class ReactionService {
     if (!postId) throw new CustomError(400, 'postId query param required');
     return ReactionDao.countByPost(postId);
   }
+
+  async getUserReaction(userId, postId) {
+    if (!userId || !postId) {
+      throw new CustomError(400, 'userId and postId are required');
+    }
+    return ReactionDao.getUserReaction(userId, postId);
+  }
 }
 
 module.exports = new ReactionService();

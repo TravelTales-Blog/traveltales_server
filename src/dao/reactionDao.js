@@ -77,6 +77,21 @@ class ReactionDao {
                 });
         });
     }
+
+    static async getUserReaction(userId, postId) {
+        return new Promise((resolve, reject) => {
+            db.get(
+                `SELECT type
+             FROM reactions
+             WHERE user_id = ? AND post_id = ?`,
+                [userId, postId],
+                (err, row) => {
+                    if (err) return reject(err);
+                    resolve(row ? row.type : null);
+                }
+            );
+        });
+    }
 }
 
 module.exports = ReactionDao;

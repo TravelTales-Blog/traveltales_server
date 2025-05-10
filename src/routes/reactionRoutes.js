@@ -11,5 +11,6 @@ router.use(authenticateJWT);
 router.post('/react', reactionController.react);
 router.delete('/undoReact', reactionController.undo);
 router.get('/getCount', reactionController.count);
+router.get('/getUserReaction', reactionController.getUserReaction);
 
 module.exports = router;
