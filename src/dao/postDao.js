@@ -17,7 +17,7 @@ class PostDao {
     static async findAllPosts() {
         return new Promise((resolve, reject) => {
             db.all(
-                `SELECT p.post_id p.title, p.content, p.country, p.visit_date, p.image_url u.username FROM posts AS p JOIN users AS u N p.user_id = u.user_id ORDER BY p.created_at DESC`,
+                `SELECT p.post_id, p.title, p.content, p.country, p.visit_date, p.image_url, u.username FROM posts AS p JOIN users AS u ON p.user_id = u.user_id ORDER BY p.created_at DESC`,
                 (err, rows) => {
                     if (err) reject(err);
                     else resolve(rows);
@@ -102,23 +102,7 @@ class PostDao {
     static async findByFollowees(follower_id) {
         return new Promise((resolve, reject) => {
             db.all(`
-            SELECT
-              p.post_id,
-              p.user_id,
-              p.title,
-              p.content,
-              p.country,
-              p.visit_date,
-              p.image_url,
-              u.username
-            FROM posts p
-            JOIN users u ON p.user_id = u.user_id
-            WHERE p.user_id IN (
-              SELECT followee_id
-              FROM follows
-              WHERE follower_id = ?
-            )
-            ORDER BY p.created_at DESC
+            SELECT p.post_id, p.user_id, p.title, p.content, p.country, p.visit_date, p.image_url, u.username FROM posts p JOIN users u ON p.user_id = u.user_id WHERE p.user_id IN ( SELECT followee_id FROM follows WHERE follower_id = ? ) ORDER BY p.created_at DESC
           `, [follower_id], (err, rows) => {
                 if (err) return reject(err);
                 resolve(rows);
@@ -129,18 +113,7 @@ class PostDao {
     static async findByUser(user_id) {
         return new Promise((resolve, reject) => {
             db.all(`
-            SELECT
-              p.post_id,
-              p.user_id,
-              p.title,
-              p.content,
-              p.country,
-              p.visit_date,
-              p.image_url
-            FROM posts p
-            JOIN users u ON p.user_id = u.user_id
-            WHERE p.user_id = ?
-            ORDER BY p.created_at DESC
+            SELECT p.post_id, p.user_id, p.title, p.content, p.country, p.visit_date, p.image_url FROM posts p JOIN users u ON p.user_id = u.user_id WHERE p.user_id = ? ORDER BY p.created_at DESC
           `, [user_id], (err, rows) => {
                 if (err) return reject(err);
                 resolve(rows);

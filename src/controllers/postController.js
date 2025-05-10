@@ -65,7 +65,7 @@ class PostController {
     try {
       const { userId } = req.query;
       const posts = await postService.getPostOfFollowees(userId);
-      res.status(200).json({ posts, page: Number(page) });
+      res.status(200).json(posts);
     } catch (error) {
       next(error);
     }

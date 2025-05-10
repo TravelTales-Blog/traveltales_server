@@ -1,5 +1,4 @@
 const PostDao = require('../dao/postDao');
-const { post } = require('../routes/postRoutes');
 const CustomError = require('../utils/errorHandler');
 
 class PostService {
@@ -81,10 +80,10 @@ class PostService {
 
     async getPostsByUser(userId) {
         if (!userId) {
-          throw new CustomError(400, 'userId required');
+            throw new CustomError(400, 'userId required');
         }
         return PostDao.findByUser(userId);
-      }
+    }
 
 }
 
