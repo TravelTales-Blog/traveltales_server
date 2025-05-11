@@ -4,6 +4,9 @@ const CustomError = require('../utils/errorHandler');
 const authenticateJWT = (req, res, next) => {
     const authHeader = req.headers['authorization'];
     try {
+        if (['GET', 'HEAD', 'OPTIONS'].includes(req.method)) {
+            return next();
+        }
         const token = authHeader.split(' ')[1];
 
         const decodedToken = verifyToken(token);
