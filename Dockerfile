@@ -8,8 +8,6 @@ RUN npm install
 
 COPY . .
 
-RUN npm run swagger
-
 FROM gcr.io/distroless/nodejs20
 
 WORKDIR /app
