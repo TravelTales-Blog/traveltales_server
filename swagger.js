@@ -1,11 +1,13 @@
 const swaggerAutogen = require('swagger-autogen')();
+require('dotenv').config();
 
+const PORT = process.env.PORT || 3000;
 const doc = {
   info: {
     title: 'W1867571 CW2 API Documentation',
     description: 'Automatically generated documentation for Course Work 1',
   },
-  host: 'localhost:3000', 
+  host: `localhost: ${PORT}`, 
   schemes: ['http'],
 };
 
