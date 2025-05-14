@@ -1,4 +1,6 @@
 const express = require('express');
+const swaggerUI = require('swagger-ui-express');
+const swaggerDocument = require('./swagger-output.json'); 
 const path = require('path');
 const logger = require('./src/middleware/logger');
 const errorHandler = require('./src/middleware/errorHandler');
@@ -36,6 +38,8 @@ app.use('/api/post', postRoutes);
 app.use('/api/follow', followRoutes);
 app.use('/api/react', reactRoutes);
 app.use('/api/comment', commentRoutes);
+
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 app.use(errorHandler);
 
