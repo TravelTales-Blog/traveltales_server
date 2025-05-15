@@ -5,7 +5,7 @@ const PORT = process.env.PORT || 3000;
 const doc = {
   info: {
     title: 'W1867571 CW2 API Documentation',
-    description: 'Automatically generated documentation for Course Work 1',
+    description: 'Automatically generated documentation for Course Work 2',
   },
   host: `localhost: ${PORT}`, 
   schemes: ['http'],

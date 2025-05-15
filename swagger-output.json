@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "W1867571 CW2 API Documentation",
-    "description": "Automatically generated documentation for Course Work 1",
+    "description": "Automatically generated documentation for Course Work 2",
     "version": "1.0.0"
   },
   "host": "localhost:3000",
